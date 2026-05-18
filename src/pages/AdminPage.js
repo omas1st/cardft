@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminPage.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const AdminPage = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ const AdminPage = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const res = await axios.get('https://cardbk.vercel.app/api/submissions');
+      const res = await axios.get(`${API_URL}/api/submissions`);
       setSubmissions(res.data);
     } catch (err) {
       console.error(err);
@@ -27,7 +29,7 @@ const AdminPage = () => {
 
   const fetchRedirectUrl = async () => {
     try {
-      const res = await axios.get('https://cardbk.vercel.app/api/config/redirect-url');
+      const res = await axios.get(`${API_URL}/api/config/redirect-url`);
       setRedirectUrl(res.data.redirectUrl);
       setUrlInput(res.data.redirectUrl);
     } catch (err) {
@@ -43,7 +45,7 @@ const AdminPage = () => {
     }
 
     try {
-      const res = await axios.put('https://cardbk.vercel.app/api/config/redirect-url', {
+      const res = await axios.put(`${API_URL}/api/config/redirect-url`, {
         redirectUrl: processedUrl,
       });
       setRedirectUrl(res.data.redirectUrl);
