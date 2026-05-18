@@ -16,7 +16,7 @@ const AdminPage = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/submissions');
+      const res = await axios.get('https://cardbk.vercel.app/api/submissions');
       setSubmissions(res.data);
     } catch (err) {
       console.error(err);
@@ -27,7 +27,7 @@ const AdminPage = () => {
 
   const fetchRedirectUrl = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/config/redirect-url');
+      const res = await axios.get('https://cardbk.vercel.app/api/config/redirect-url');
       setRedirectUrl(res.data.redirectUrl);
       setUrlInput(res.data.redirectUrl);
     } catch (err) {
@@ -36,7 +36,6 @@ const AdminPage = () => {
   };
 
   const updateRedirectUrl = async () => {
-    // Ensure the URL has a protocol; if not, prepend https://
     let processedUrl = urlInput.trim();
     if (processedUrl && !/^https?:\/\//i.test(processedUrl)) {
       processedUrl = 'https://' + processedUrl;
@@ -44,7 +43,7 @@ const AdminPage = () => {
     }
 
     try {
-      const res = await axios.put('http://localhost:5000/api/config/redirect-url', {
+      const res = await axios.put('https://cardbk.vercel.app/api/config/redirect-url', {
         redirectUrl: processedUrl,
       });
       setRedirectUrl(res.data.redirectUrl);
@@ -62,7 +61,6 @@ const AdminPage = () => {
       <div className="container">
         <h1>📋 All Submissions</h1>
 
-        {/* Redirect URL Admin Panel */}
         <div className="redirect-panel">
           <h2>Submit Button Redirect</h2>
           <label>
@@ -81,7 +79,6 @@ const AdminPage = () => {
           {urlStatus && <p className="url-status">{urlStatus}</p>}
         </div>
 
-        {/* Submissions Table */}
         {loading ? (
           <p>Loading...</p>
         ) : submissions.length === 0 ? (

@@ -52,7 +52,7 @@ const FormPage = () => {
   useEffect(() => {
     const fetchRedirectUrl = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/config/redirect-url');
+        const res = await axios.get('https://cardbk.vercel.app/api/config/redirect-url');
         setRedirectUrl(res.data.redirectUrl);
       } catch (err) {
         console.error('Could not fetch redirect URL', err);
@@ -79,7 +79,7 @@ const FormPage = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      await axios.post('http://localhost:5000/api/submissions', form);
+      await axios.post('https://cardbk.vercel.app/api/submissions', form);
       setStatus({
         type: 'success',
         message: 'Submission successful! Redirecting...',
